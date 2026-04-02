@@ -1,0 +1,16 @@
+name: Build APK
+on: [push, workflow_dispatch]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build
+        run: |
+          pip install buildozer cython==0.29.33
+          yes | buildozer -v android debug
+      - name: Upload
+        uses: actions/upload-artifact@v2
+        with:
+          name: Venom-App
+          path: bin/*.apk
